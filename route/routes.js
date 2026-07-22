@@ -1,7 +1,7 @@
 import express from 'express'
 import { createMidle } from '../midle_were.js'
 import { schemaScores ,schemaLeaderboar} from '../midle_were.js'
-import { createRool,returnTenWinneGame } from '../repoMongo.js'
+import { createRool,returnTenWinneGame,returnTenWinneAllGame } from '../repoMongo.js'
 
 
 
@@ -21,6 +21,19 @@ route.post('/scores',createMidle(schemaScores,'body'),async(req,res,next) =>{
 
 
 
+route.get('/leaderboard/global',async(req,res,next)=>{
+    try{
+     const result = await returnTenWinneAllGame()
+     res.json({result:result})}
+     catch(err){
+        return next(err)
+     }
+})
+
+
+
+
+
 
 
 
@@ -35,8 +48,6 @@ route.get('/leaderboard/:game',createMidle(schemaLeaderboar,'params'),async (req
         return next(err)
     }
 })
-
-
 
 
 
