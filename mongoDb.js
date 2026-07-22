@@ -1,19 +1,25 @@
 import { MongoClient } from "mongodb";
 import 'dotenv/config'
 
+
+const client = new MongoClient(process.env.MONGO_URI)
+
+
 async function connectMongo(){
 try{
-const connectionMongo = new MongoClient(process.env.MONGO_URI)
-const connect = await connectionMongo.connect()
-const db = connect.db('score-tracker')
+await client.connect()
+const db = client.db('score-tracker')
 return db
 }
 catch(err){
-    throw(err.message)
+    console.error(err)
+    throw(err)
 }
 
 }
 
 export const db = await connectMongo()
+
+
 
 
